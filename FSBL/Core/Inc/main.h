@@ -172,6 +172,8 @@ void Error_Handler(void);
 #define HEXASPI_IO_2_GPIO_Port GPIOP
 #define HEXASPI_IO_13_Pin GPIO_PIN_13
 #define HEXASPI_IO_13_GPIO_Port GPIOP
+#define LED1_Pin GPIO_PIN_1
+#define LED1_GPIO_Port GPIOO
 #define HEXASPI_DQS0_Pin GPIO_PIN_2
 #define HEXASPI_DQS0_GPIO_Port GPIOO
 #define SAI1_MCLK_A_Pin GPIO_PIN_7
