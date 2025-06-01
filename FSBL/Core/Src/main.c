@@ -96,10 +96,18 @@ int main(void)
   BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
   UTIL_LCD_SetFuncDriver(&LCD_Driver);
   UTIL_LCD_Clear(UTIL_LCD_COLOR_ST_BLUE_DARK);
-  UTIL_LCD_SetFont(&UTIL_LCD_DEFAULT_FONT);
-  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  // Font config
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLUE);
   UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GRAY_LIGHT);
-  UTIL_LCD_DisplayStringAt(0, 10, (uint8_t *)"STM32N6 Discovery LCD test", CENTER_MODE);
+
+  uint32_t x_size;
+  uint32_t y_size;
+
+  BSP_LCD_GetXSize(0, &x_size);
+  BSP_LCD_GetYSize(0, &y_size);
+  BSP_LCD_FillRect(0, 0, 0, x_size, 45, UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DisplayStringAt(0, 10, (uint8_t *)"STM32N6 Digits", CENTER_MODE);
 
   /* USER CODE END 2 */
 
@@ -113,7 +121,7 @@ int main(void)
 	BSP_LED_Toggle(LED_RED);
 	BSP_LED_Toggle(LED_GREEN);
 	//HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-	HAL_Delay(100);
+	HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
