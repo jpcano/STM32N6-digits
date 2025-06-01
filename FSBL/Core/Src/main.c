@@ -71,25 +71,34 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
-  UTIL_LCD_SetFuncDriver(&LCD_Driver);
+
   /* USER CODE END Init */
 
   /* USER CODE BEGIN SysInit */
-
+  /* Update the RIF config for the used peripherals */
+  RIMC_MasterConfig_t RIMC_master = {0};
+  RIMC_master.MasterCID = RIF_CID_1;
+  RIMC_master.SecPriv = RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV;
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_DMA2D, &RIMC_master);
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC1 , &RIMC_master);
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC2 , &RIMC_master);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_DMA2D  , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDC   , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDCL1 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDCL2 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
   BSP_LED_Init(LED_RED);
   BSP_LED_Init(LED_GREEN);
-  /* Clear the LCD */
+
+  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
+  UTIL_LCD_SetFuncDriver(&LCD_Driver);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_ST_BLUE_DARK);
   UTIL_LCD_SetFont(&UTIL_LCD_DEFAULT_FONT);
-  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
-  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
-  /* Set the LCD Text Color */
-  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKBLUE);
-  /* Display LCD messages */
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GRAY_LIGHT);
   UTIL_LCD_DisplayStringAt(0, 10, (uint8_t *)"STM32N6 Discovery LCD test", CENTER_MODE);
 
   /* USER CODE END 2 */
@@ -104,7 +113,7 @@ int main(void)
 	BSP_LED_Toggle(LED_RED);
 	BSP_LED_Toggle(LED_GREEN);
 	//HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-	HAL_Delay(500);
+	HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
