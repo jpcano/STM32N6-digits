@@ -214,5 +214,8 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
-
+void EXTI4_IRQHandler(void)
+{
+  BSP_TS_IRQHandler(0);
+}
 /* USER CODE END 1 */

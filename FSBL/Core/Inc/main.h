@@ -41,6 +41,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "stm32n6570_discovery.h"
 #include "stm32n6570_discovery_lcd.h"
+#include "stm32n6570_discovery_ts.h"
 #include "stm32_lcd.h"
 /* USER CODE END Includes */
 

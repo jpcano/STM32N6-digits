@@ -52,6 +52,7 @@
 									<listOptionValue builtIn="false" value="../../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/BSP/STM32N6570-DK"/>
 									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/Common"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/gt911"/>
 									<listOptionValue builtIn="false" value="../Utilities/lcd"/>
 									<listOptionValue builtIn="false" value="../Utilities/Fonts"/>
 								</option>
