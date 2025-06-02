@@ -13,13 +13,11 @@ TS_State_t  TS_State;
 TS_Init_t hTS;
 uint16_t x_new_pos = 0, x_previous_pos = 0;
 uint16_t y_new_pos = 0, y_previous_pos = 0;
-static uint32_t touchscreen_color_idx = 0;
-uint32_t  colors[24] = {UTIL_LCD_COLOR_BLUE , UTIL_LCD_COLOR_GREEN, UTIL_LCD_COLOR_RED, UTIL_LCD_COLOR_CYAN,
-                        UTIL_LCD_COLOR_MAGENTA, UTIL_LCD_COLOR_YELLOW,UTIL_LCD_COLOR_LIGHTBLUE, UTIL_LCD_COLOR_LIGHTGREEN,
-                        UTIL_LCD_COLOR_LIGHTRED, UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_LIGHTMAGENTA, UTIL_LCD_COLOR_LIGHTYELLOW,
-                        UTIL_LCD_COLOR_DARKGREEN, UTIL_LCD_COLOR_DARKRED, UTIL_LCD_COLOR_DARKCYAN,UTIL_LCD_COLOR_DARKMAGENTA,
-                        UTIL_LCD_COLOR_LIGHTGRAY, UTIL_LCD_COLOR_GRAY, UTIL_LCD_COLOR_DARKGRAY, UTIL_LCD_COLOR_DARKYELLOW,
-                        UTIL_LCD_COLOR_BLACK, UTIL_LCD_COLOR_BROWN, UTIL_LCD_COLOR_ORANGE, UTIL_LCD_COLOR_DARKBLUE};
+
+int PIXEL_SIZE = 14;
+int BOARD_X = 2;
+int BOARD_Y = 5;
+int BOARD_SIZE = 28;
 
 void Board(void)
 {
@@ -40,11 +38,11 @@ void Board(void)
   BSP_TS_EnableIT(0);
 
   //UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
-  for(k = 0; k < hTS.Width/40; k++)
+  for(k = BOARD_X; k < BOARD_SIZE + BOARD_X; k++)
   {
-    for(l = 0; l < hTS.Height/40; l++)
+    for(l = BOARD_Y; l < BOARD_SIZE + BOARD_Y; l++)
     {
-      UTIL_LCD_DrawRect(40*k, 40*l,40,40, UTIL_LCD_COLOR_BLACK);
+      UTIL_LCD_DrawRect(PIXEL_SIZE*k, PIXEL_SIZE*l,PIXEL_SIZE,PIXEL_SIZE, UTIL_LCD_COLOR_BLACK);
     }
   }
 }
@@ -83,19 +81,19 @@ void TS_Update(void)
     x_new_pos = TS_State.TouchX;
     y_new_pos = TS_State.TouchY;
 
-    for(i = 0; i < hTS.Width/40; i++)
+    for(i = BOARD_X; i < BOARD_SIZE + BOARD_X; i++)
     {
-      for(j = 0; j < hTS.Height/40; j++)
+      for(j = BOARD_Y; j < BOARD_SIZE + BOARD_Y; j++)
       {
-        if(((x_new_pos > 40*i) && (x_new_pos < 40*(i+1))) && ((y_new_pos > 40*j) && (y_new_pos < 40*(j+1))))
+        if(((x_new_pos > PIXEL_SIZE*i) && (x_new_pos < PIXEL_SIZE*(i+1))) && ((y_new_pos > PIXEL_SIZE*j) && (y_new_pos < PIXEL_SIZE*(j+1))))
         {
-          UTIL_LCD_FillRect(x_previous_pos, y_previous_pos,40,40, UTIL_LCD_COLOR_ST_BLUE_DARK);
-          UTIL_LCD_DrawRect(x_previous_pos, y_previous_pos,40,40, UTIL_LCD_COLOR_BLACK);
+          //UTIL_LCD_FillRect(x_previous_pos, y_previous_pos,PIXEL_SIZE,PIXEL_SIZE, UTIL_LCD_COLOR_ST_BLUE_DARK);
+          UTIL_LCD_DrawRect(x_previous_pos, y_previous_pos,PIXEL_SIZE,PIXEL_SIZE, UTIL_LCD_COLOR_BLACK);
 
-          UTIL_LCD_FillRect(40*i, 40*j,40,40, colors[(touchscreen_color_idx++ % 24)]);
+          UTIL_LCD_FillRect(PIXEL_SIZE*i, PIXEL_SIZE*j,PIXEL_SIZE,PIXEL_SIZE, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
 
-          x_previous_pos = 40*i;
-          y_previous_pos = 40*j;
+          x_previous_pos = PIXEL_SIZE*i;
+          y_previous_pos = PIXEL_SIZE*j;
           break;
         }
       }
